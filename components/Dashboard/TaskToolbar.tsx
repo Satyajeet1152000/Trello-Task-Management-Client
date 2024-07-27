@@ -26,7 +26,7 @@ const TaskToolbar = () => {
     });
 
     return (
-        <div className="text-gray-500 flex justify-between">
+        <div className="text-gray-500 flex justify-between w-full">
             {/* Search */}
             <div className="w-fit ">
                 <Form {...form}>

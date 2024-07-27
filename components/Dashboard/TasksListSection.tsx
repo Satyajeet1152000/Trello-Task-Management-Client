@@ -3,7 +3,7 @@ import TaskToolbar from "./TaskToolbar";
 
 const TasksListSection = () => {
     return (
-        <div>
+        <div className=" space-y-5">
             <TaskToolbar />
             <TaskLists />
         </div>
