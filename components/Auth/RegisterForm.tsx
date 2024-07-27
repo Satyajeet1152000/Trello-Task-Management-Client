@@ -15,21 +15,22 @@ import CardWrapper from "./CardWrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { LoginSchema } from "@/lib/schema";
 import FormSuccess from "../FormSuccess";
+import { RegisterSchema } from "@/lib/schema";
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
+            name: "",
             email: "",
             password: "",
         },
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         startTransition(() => {
             // login(values).then((data) => {
             //     if (data?.error) {
@@ -44,9 +45,9 @@ const LoginForm = () => {
 
     return (
         <CardWrapper
-            footerText="Don't have an account? Create a"
-            footerHrefText="new account"
-            footerHref="/register"
+            footerText="Already have an account?"
+            footerHrefText="Log in"
+            footerHref="/login"
         >
             <Form {...form}>
                 <form
@@ -54,6 +55,23 @@ const LoginForm = () => {
                     className=" space-y-6"
                 >
                     <div className=" space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            disabled={isPending}
+                                            placeholder="Full name"
+                                            type="text"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="email"
@@ -97,7 +115,7 @@ const LoginForm = () => {
                         className=" w-full bg-gradient-to-b from-[#4C38C2] to-[#2F2188] py-7 text-xl font-normal"
                         disabled={isPending}
                     >
-                        Login
+                        Sign Up
                     </Button>
                 </form>
             </Form>
@@ -105,4 +123,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

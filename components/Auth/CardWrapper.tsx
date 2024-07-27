@@ -1,8 +1,8 @@
 "use client";
 
+import LinkButton from "../LinkButton";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import Header from "./Header";
-import LinkButton from "./LinkButton";
 
 interface CardWrapperProps {
     children: React.ReactNode;
