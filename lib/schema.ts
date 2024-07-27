@@ -20,3 +20,9 @@ export const RegisterSchema = z.object({
         message: "Pasword is required.",
     }),
 });
+
+export const SearchSchema = z.object({
+    search: z.string({
+        message: "Full name is required.",
+    }),
+});
