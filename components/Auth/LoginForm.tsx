@@ -101,7 +101,7 @@ const LoginForm = () => {
                         className=" w-full bg-gradient-to-b from-[#4C38C2] to-[#2F2188] py-7 text-xl font-normal"
                         disabled={isPending}
                     >
-                        Login
+                        Login in
                     </Button>
                 </form>
             </Form>
