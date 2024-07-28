@@ -27,7 +27,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
 import {
     CalendarIcon,
-    Ghost,
     Loader,
     Pencil,
     Plus,
@@ -43,9 +42,9 @@ const CreateNewTaskForm = () => {
         defaultValues: {
             favorite: false,
             title: "",
-            status: "",
-            prioriry: "",
-            deadline: "",
+            status: undefined,
+            prioriry: undefined,
+            deadline: undefined,
             description: "",
         },
     });
@@ -53,17 +52,19 @@ const CreateNewTaskForm = () => {
     const [isPending, startTransition] = useTransition();
 
     const onSubmit = (values: z.infer<typeof CreateNewTaskSchema>) => {
-        startTransition(() => {
-            // TODO: DB Logic
-            // login(values).then((data) => {
-            //     if (data?.error) {
-            //         setError(data.error);
-            //     } else {
-            //         setSuccess(data?.success);
-            //         // You can redirect or perform any other actions on success here
-            //     }
-            // });
-        });
+        console.log("Submit Enter");
+        console.log(values);
+        // startTransition(() => {
+        // TODO: DB Logic
+        // login(values).then((data) => {
+        //     if (data?.error) {
+        //         setError(data.error);
+        //     } else {
+        //         setSuccess(data?.success);
+        //         // You can redirect or perform any other actions on success here
+        //     }
+        // });
+        // });
     };
 
     const [favBtn, setFavBtn] = useState(false);
@@ -95,7 +96,7 @@ const CreateNewTaskForm = () => {
                                         className="text-gray-500 space-x-2 text-xl bg-gray-100"
                                         onClick={() => {
                                             setFavBtn(!favBtn);
-                                            form.setValue("favorite", favBtn);
+                                            form.setValue("favorite", !favBtn);
                                         }}
                                     >
                                         <span>Favorite</span>
@@ -175,6 +176,7 @@ const CreateNewTaskForm = () => {
                                                     },
                                                 ].map((d, i) => (
                                                     <SelectItem
+                                                        key={i}
                                                         value={d.v}
                                                         className="text-lg text-gray-500"
                                                     >
@@ -218,7 +220,10 @@ const CreateNewTaskForm = () => {
                                                     "high",
                                                     "urgent",
                                                 ].map((d, i) => (
-                                                    <SelectItem value={d}>
+                                                    <SelectItem
+                                                        value={d}
+                                                        key={i}
+                                                    >
                                                         <span className=" capitalize text-md text-gray-700">
                                                             {d}
                                                         </span>
@@ -330,6 +335,14 @@ const CreateNewTaskForm = () => {
                             <span>Add custom property</span>
                         </div>
                     </div>
+
+                    <Button
+                        type="submit"
+                        className=" space-x-2 w-fit text-lg py-6 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+                        disabled={isPending}
+                    >
+                        Create Task
+                    </Button>
 
                     {/* breakpoint */}
                     <div className="border-t-2 border-gray-200 text-gray-300 mt-5 pt-5">
