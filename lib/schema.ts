@@ -26,3 +26,24 @@ export const SearchSchema = z.object({
         message: "Full name is required.",
     }),
 });
+
+export const CreateNewTaskSchema = z.object({
+    title: z.string({
+        message: "Enter title.",
+    }),
+    status: z.union([
+        z.enum(["todo", "inProgress", "underReview", "finished"]),
+        z.literal(""),
+    ]),
+    prioriry: z.union([
+        z.enum(["low", "medium", "high", "urgent"]),
+        z.literal(""),
+    ]),
+    deadline: z
+        .string({
+            message: "Select date.",
+        })
+        .datetime(),
+    description: z.string().optional(),
+    favorite: z.boolean().optional().default(false),
+});

@@ -32,6 +32,7 @@ const RegisterForm = () => {
 
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         startTransition(() => {
+            // TODO: DB Logic
             // login(values).then((data) => {
             //     if (data?.error) {
             //         setError(data.error);
