@@ -1,6 +1,9 @@
+export type StatusType = "todo" | "inProgress" | "underReview" | "finished";
+
 export interface RecordType {
+    id: string;
     title: string;
-    status: "todo" | "inProgress" | "underReview" | "finished";
+    status: StatusType;
     priority: "Low" | "Medium" | "High" | "Urgent";
     deadline: Date;
     description: string;
@@ -10,6 +13,7 @@ export interface RecordType {
 
 const records: RecordType[] = [
     {
+        id: "1",
         title: "Develop Feature A",
         status: "todo",
         priority: "High",
@@ -20,6 +24,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-15T08:30:00Z"),
     },
     {
+        id: "2",
         title: "Design UI Mockups",
         status: "inProgress",
         priority: "Medium",
@@ -30,6 +35,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-16T09:00:00Z"),
     },
     {
+        id: "3",
         title: "Code Review for Module B",
         status: "underReview",
         priority: "Low",
@@ -40,6 +46,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-17T10:15:00Z"),
     },
     {
+        id: "4",
         title: "Setup CI/CD Pipeline",
         status: "finished",
         priority: "Urgent",
@@ -50,6 +57,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-18T11:45:00Z"),
     },
     {
+        id: "5",
         title: "Database Optimization",
         status: "todo",
         priority: "Medium",
@@ -60,6 +68,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-19T14:30:00Z"),
     },
     {
+        id: "6",
         title: "Update User Documentation",
         status: "inProgress",
         priority: "High",
@@ -70,6 +79,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-20T15:00:00Z"),
     },
     {
+        id: "7",
         title: "Customer Feedback Analysis",
         status: "underReview",
         priority: "Low",
@@ -80,6 +90,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-21T16:45:00Z"),
     },
     {
+        id: "8",
         title: "Security Audit",
         status: "finished",
         priority: "Urgent",
@@ -90,6 +101,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-22T09:30:00Z"),
     },
     {
+        id: "9",
         title: "Marketing Strategy Meeting",
         status: "todo",
         priority: "Medium",
@@ -100,6 +112,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-23T10:00:00Z"),
     },
     {
+        id: "10",
         title: "Bug Fixing Sprint",
         status: "inProgress",
         priority: "High",
@@ -110,6 +123,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-24T11:15:00Z"),
     },
     {
+        id: "11",
         title: "API Documentation Update",
         status: "underReview",
         priority: "Low",
@@ -120,6 +134,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-25T13:45:00Z"),
     },
     {
+        id: "12",
         title: "User Testing Session",
         status: "finished",
         priority: "Urgent",
@@ -130,6 +145,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-26T14:30:00Z"),
     },
     {
+        id: "13",
         title: "Refactor Legacy Code",
         status: "todo",
         priority: "High",
@@ -140,6 +156,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-27T15:00:00Z"),
     },
     {
+        id: "14",
         title: "Performance Testing",
         status: "inProgress",
         priority: "Medium",
@@ -150,6 +167,7 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-28T16:45:00Z"),
     },
     {
+        id: "15",
         title: "Update Privacy Policy",
         status: "underReview",
         priority: "Low",
@@ -163,7 +181,7 @@ const records: RecordType[] = [
 
 export const getTasksFromDB = async () => {
     // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 0));
 
     // Return the records
     return records;
