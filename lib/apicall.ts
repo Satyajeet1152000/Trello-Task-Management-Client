@@ -150,46 +150,6 @@ const records: RecordType[] = [
         createdAt: new Date("2024-07-28T16:45:00Z"),
     },
     {
-        title: "Prepare Sales Report",
-        status: "underReview",
-        priority: "Low",
-        deadline: new Date("2024-09-10T12:00:00Z"),
-        description:
-            "Prepare the sales report for the last quarter. Analyze sales data and identify trends. Present the report in a clear and concise format, including charts and graphs where necessary.",
-        favorite: true,
-        createdAt: new Date("2024-07-29T08:30:00Z"),
-    },
-    {
-        title: "Server Maintenance",
-        status: "finished",
-        priority: "Urgent",
-        deadline: new Date("2024-07-29T12:00:00Z"),
-        description:
-            "Perform routine server maintenance to ensure optimal performance. Apply necessary updates and patches. Monitor server health and address any issues that arise.",
-        favorite: false,
-        createdAt: new Date("2024-07-30T09:00:00Z"),
-    },
-    {
-        title: "Customer Support Training",
-        status: "todo",
-        priority: "Medium",
-        deadline: new Date("2024-08-15T12:00:00Z"),
-        description:
-            "Conduct a training session for the customer support team. Cover new features and common issues. Provide resources and materials to help the team assist customers effectively.",
-        favorite: true,
-        createdAt: new Date("2024-07-31T10:15:00Z"),
-    },
-    {
-        title: "Competitive Analysis",
-        status: "inProgress",
-        priority: "High",
-        deadline: new Date("2024-09-05T12:00:00Z"),
-        description:
-            "Conduct a competitive analysis to understand the market landscape. Identify key competitors and analyze their strengths and weaknesses. Prepare a report with findings and strategic recommendations.",
-        favorite: false,
-        createdAt: new Date("2024-08-01T11:45:00Z"),
-    },
-    {
         title: "Update Privacy Policy",
         status: "underReview",
         priority: "Low",
@@ -198,17 +158,6 @@ const records: RecordType[] = [
             "Review and update the privacy policy to comply with recent regulations. Ensure the policy is clear and easy to understand. Communicate changes to users and stakeholders.",
         favorite: true,
         createdAt: new Date("2024-08-02T14:30:00Z"),
-    },
-    {
-        title: "Product Launch Plan",
-        status: "finished",
-        priority: "Urgent",
-        deadline: new Date("2024-07-31T12:00:00Z"),
-        description:
-            "Develop a comprehensive plan for the upcoming product launch. Coordinate with marketing, sales, and development teams. Ensure all preparations are on track and address any potential issues.",
-        favorite: false,
-        // createdAt: new Date("2024-08-03T15:00:00Z"),
-        createdAt: new Date("2024-07-15T08:30:00Z"),
     },
 ];
 
