@@ -28,6 +28,7 @@ import { Calendar } from "../ui/calendar";
 import {
     CalendarIcon,
     Loader,
+    Maximize2,
     Pencil,
     Plus,
     Share2,
@@ -75,43 +76,53 @@ const CreateNewTaskForm = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className=" space-y-6 p-5"
             >
-                {/* Favorite */}
-                <FormField
-                    control={form.control}
-                    name="favorite"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <div className=" space-x-5">
-                                    <Button
-                                        variant={"ghost"}
-                                        className="text-gray-500 space-x-2 text-xl bg-gray-100"
-                                    >
-                                        <span>Share</span>
-                                        <Share2 />
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        className="text-gray-500 space-x-2 text-xl bg-gray-100"
-                                        onClick={() => {
-                                            setFavBtn(!favBtn);
-                                            form.setValue("favorite", !favBtn);
-                                        }}
-                                    >
-                                        <span>Favorite</span>
-                                        <Star
-                                            className={cn("text-gray-400", {
-                                                "text-yellow-500 fill-yellow-500":
-                                                    favBtn === true,
-                                            })}
-                                        />
-                                    </Button>
-                                </div>
-                            </FormControl>
-                        </FormItem>
-                    )}
-                />
+                <div className="flex items-center justify-between">
+                    {/* ml for close button */}
+                    <Button variant={"ghost"} className="text-gray-500 ml-20">
+                        <Maximize2 className=" rotate-90" />
+                    </Button>
+
+                    {/* Favorite */}
+                    <FormField
+                        control={form.control}
+                        name="favorite"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <div className=" space-x-5">
+                                        <Button
+                                            variant={"ghost"}
+                                            className="text-gray-500 space-x-2 text-xl bg-gray-100"
+                                        >
+                                            <span>Share</span>
+                                            <Share2 />
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            className="text-gray-500 space-x-2 text-xl bg-gray-100"
+                                            onClick={() => {
+                                                setFavBtn(!favBtn);
+                                                form.setValue(
+                                                    "favorite",
+                                                    !favBtn
+                                                );
+                                            }}
+                                        >
+                                            <span>Favorite</span>
+                                            <Star
+                                                className={cn("text-gray-400", {
+                                                    "text-yellow-500 fill-yellow-500":
+                                                        favBtn === true,
+                                                })}
+                                            />
+                                        </Button>
+                                    </div>
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
                 {/* Title */}
                 <FormField
