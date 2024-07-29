@@ -99,7 +99,7 @@ const TaskLists = () => {
                             />
                         ))
                 )}
-                <AddNewButton />
+                <AddNewButton value="todo" />
             </div>
 
             <div
@@ -123,7 +123,7 @@ const TaskLists = () => {
                             />
                         ))
                 )}
-                <AddNewButton />
+                <AddNewButton value="inProgress" />
             </div>
             <div
                 id="underReview"
@@ -146,7 +146,7 @@ const TaskLists = () => {
                             />
                         ))
                 )}
-                <AddNewButton />
+                <AddNewButton value="underReview" />
             </div>
             <div
                 id="finished"
@@ -169,7 +169,7 @@ const TaskLists = () => {
                             />
                         ))
                 )}
-                <AddNewButton />
+                <AddNewButton value="finished" />
             </div>
         </div>
     );

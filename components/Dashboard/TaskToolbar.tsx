@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { SearchSchema } from "@/lib/schema";
+import { useModal } from "@/context/ModelContext";
 
 const TaskToolbar = () => {
     const form = useForm<z.infer<typeof SearchSchema>>({
@@ -24,6 +25,8 @@ const TaskToolbar = () => {
             search: "",
         },
     });
+
+    const { showModal } = useModal();
 
     return (
         <div className="text-gray-500 flex justify-between w-full">
@@ -73,7 +76,10 @@ const TaskToolbar = () => {
                         {m.title} {m.icon}
                     </span>
                 ))}
-                <Button className=" space-x-2 text-lg py-5 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]">
+                <Button
+                    className=" space-x-2 text-lg py-5 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+                    onClick={() => showModal()}
+                >
                     <span>Create new</span>{" "}
                     <CirclePlusIcon className=" fill-white text-[#2F2188]" />
                 </Button>

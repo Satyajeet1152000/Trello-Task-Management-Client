@@ -34,10 +34,16 @@ import {
     Share2,
     Star,
     TriangleAlert,
+    X,
 } from "lucide-react";
 import { format } from "date-fns";
 
-const CreateNewTaskForm = () => {
+interface Props {
+    hideModal: () => void;
+    listStatus: string | null;
+}
+
+const CreateNewTaskForm = ({ hideModal, listStatus }: Props) => {
     const form = useForm<z.infer<typeof CreateNewTaskSchema>>({
         resolver: zodResolver(CreateNewTaskSchema),
         defaultValues: {
@@ -74,13 +80,22 @@ const CreateNewTaskForm = () => {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className=" space-y-6 p-5"
+                className=" space-y-6 p-5 bg-white h-full w-full"
             >
                 <div className="flex items-center justify-between">
-                    {/* ml for close button */}
-                    <Button variant={"ghost"} className="text-gray-500 ml-20">
-                        <Maximize2 className=" rotate-90" />
-                    </Button>
+                    <div>
+                        <Button
+                            onClick={hideModal}
+                            variant={"ghost"}
+                            className=""
+                            type="button"
+                        >
+                            <X />
+                        </Button>
+                        <Button variant={"ghost"} className="text-gray-500 ">
+                            <Maximize2 className=" rotate-90" />
+                        </Button>
+                    </div>
 
                     {/* Favorite */}
                     <FormField
@@ -160,7 +175,9 @@ const CreateNewTaskForm = () => {
                                     <div className="flex-grow">
                                         <Select
                                             onValueChange={field.onChange}
-                                            defaultValue={field.value}
+                                            defaultValue={
+                                                listStatus ?? field.value
+                                            }
                                         >
                                             <FormControl>
                                                 <SelectTrigger className=" text-gray-700  text-md">
