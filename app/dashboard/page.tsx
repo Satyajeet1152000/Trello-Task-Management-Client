@@ -1,6 +1,7 @@
-import Dashboard from "@/components/Dashboard/Dashboard";
+"use server";
 
-const DashboardPage = () => {
+import Dashboard from "@/components/Dashboard/Dashboard";
+const DashboardPage = async () => {
     return <Dashboard />;
 };
 

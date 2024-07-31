@@ -5,6 +5,7 @@ import ListHeading from "./ListHeading";
 import { ListSkeleton } from "../Skeleton";
 import Task from "./Task";
 import { getTasksFromDB, RecordType, StatusType } from "@/lib/apicall";
+import { getTaskList } from "@/actions/tasks/getTasks";
 
 const TaskLists = () => {
     const [listRecords, setListRecords] = useState<RecordType[]>([]);
@@ -13,8 +14,9 @@ const TaskLists = () => {
     useEffect(() => {
         const loadRecords = async () => {
             try {
-                const data = await getTasksFromDB();
-                setListRecords(data);
+                const data = await getTaskList();
+                console.log(data);
+                // setListRecords(data);
             } catch (error) {
                 console.error("Error fetching records:", error);
             } finally {

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-const secret = new TextEncoder().encode("76a79c5ecec9816a19044067abc2f89f");
-
 export async function middleware(request: NextRequest) {
     const token = request.cookies.get("token")?.value;
 
@@ -27,7 +25,6 @@ export async function middleware(request: NextRequest) {
             maxAge: 60 * 60 * 24 * 7, // 1 week
         });
 
-        const protectedRoutes = [];
         if (
             request.nextUrl.pathname === loginUrl.pathname ||
             request.nextUrl.pathname === "/register"

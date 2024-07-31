@@ -37,3 +37,10 @@ export function ListSkeleton() {
         </Skeleton>
     );
 }
+
+export function UserAvatar() {
+    return <Skeleton className="w-8 h-8 rounded-full" />;
+}
+export function UserName() {
+    return <Skeleton className="h-5 w-24" />;
+}

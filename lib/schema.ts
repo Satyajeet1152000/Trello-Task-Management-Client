@@ -45,3 +45,10 @@ export const CreateNewTaskSchema = z.object({
     description: z.string().optional(),
     favorite: z.boolean().optional().default(false),
 });
+
+export type User = {
+    id: string;
+    name: string;
+    email: string;
+    token: string;
+};

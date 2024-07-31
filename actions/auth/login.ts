@@ -21,7 +21,6 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
         maxAge: 60 * 60 * 24 * 7, // 1 week
     });
 
-    console.log("/login ---> Creating Session");
     return result;
 };
 
