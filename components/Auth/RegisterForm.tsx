@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FormSuccess from "../FormSuccess";
 import { RegisterSchema } from "@/lib/schema";
-import register from "@/actions/register";
+import register from "@/actions/auth/register";
 
 const RegisterForm = () => {
     const [isPending, startTransition] = useTransition();

@@ -16,8 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { LoginSchema } from "@/lib/schema";
 import FormSuccess from "../FormSuccess";
-import login from "@/actions/login";
 import { useRouter } from "next/navigation";
+import login from "@/actions/auth/login";
 
 const LoginForm = () => {
     const [isPending, startTransition] = useTransition();

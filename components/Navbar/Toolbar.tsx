@@ -1,10 +1,9 @@
 "use client";
 
 import { BellDot, ChevronsRight, Moon, Sun } from "lucide-react";
-import LinkButton from "../LinkButton";
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
-import { logout } from "@/actions/logout";
+import { logout } from "@/actions/auth/logout";
 
 const Toolbar = () => {
     const { theme, setTheme } = useTheme();
