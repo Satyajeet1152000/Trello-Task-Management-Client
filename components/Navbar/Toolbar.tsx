@@ -4,6 +4,7 @@ import { BellDot, ChevronsRight, Moon, Sun } from "lucide-react";
 import LinkButton from "../LinkButton";
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
+import { logout } from "@/actions/logout";
 
 const Toolbar = () => {
     const { theme, setTheme } = useTheme();
@@ -30,11 +31,19 @@ const Toolbar = () => {
                     <ChevronsRight />
                 </Button>
             </div>
-            <LinkButton
-                label="Logout"
-                href="/login"
-                classname="text-lg text-gray-500"
-            />
+            <form
+                action={async () => {
+                    await logout();
+                }}
+            >
+                <Button
+                    type="submit"
+                    variant={"link"}
+                    className="text-lg text-gray-500"
+                >
+                    Logout
+                </Button>
+            </form>
         </div>
     );
 };

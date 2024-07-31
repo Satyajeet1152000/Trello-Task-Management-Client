@@ -7,7 +7,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
@@ -17,9 +16,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { LoginSchema } from "@/lib/schema";
 import FormSuccess from "../FormSuccess";
+import login from "@/actions/login";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
     const [isPending, startTransition] = useTransition();
+    const [formSuccess, setFormSuccess] = useState({
+        success: false,
+        message: "",
+    });
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -30,15 +36,16 @@ const LoginForm = () => {
     });
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-        startTransition(() => {
-            // login(values).then((data) => {
-            //     if (data?.error) {
-            //         setError(data.error);
-            //     } else {
-            //         setSuccess(data?.success);
-            //         // You can redirect or perform any other actions on success here
-            //     }
-            // });
+        startTransition(async () => {
+            const result = await login(values);
+            if (result.success) {
+                router.push("/dashboard");
+            }
+
+            setFormSuccess({
+                success: result.success,
+                message: !result.success && result.error,
+            });
         });
     };
 
@@ -91,7 +98,10 @@ const LoginForm = () => {
                             )}
                         />
                     </div>
-                    <FormSuccess />
+                    <FormSuccess
+                        success={formSuccess.success}
+                        message={formSuccess.message}
+                    />
                     <Button
                         type="submit"
                         className=" w-full bg-gradient-to-b from-[#4C38C2] to-[#2F2188] py-7 text-xl font-normal"

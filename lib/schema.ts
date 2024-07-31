@@ -10,15 +10,19 @@ export const LoginSchema = z.object({
 });
 
 export const RegisterSchema = z.object({
-    name: z.string({
-        message: "Full name is required.",
+    name: z.string().min(1, {
+        message: "Name is required.",
     }),
     email: z.string().email({
         message: "Email is required.",
     }),
-    password: z.string().min(1, {
-        message: "Pasword is required.",
-    }),
+    password: z
+        .string({
+            message: "Pasword is required.",
+        })
+        .min(5, {
+            message: "Minimum password length 5",
+        }),
 });
 
 export const SearchSchema = z.object({
