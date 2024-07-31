@@ -14,9 +14,10 @@ const UserAvatar = ({ user, ...avatarProps }: UserAvatarProps) => {
             <Avatar className="relative h-10 w-10" {...avatarProps}>
                 <Image
                     src={user.image}
-                    fill
                     alt={`${user?.name}'s profile picture`}
-                    className="rounded-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-full object-cover w-full h-full"
                 />
             </Avatar>
             <h1 className="text-xl font-normal">{user?.name}</h1>
