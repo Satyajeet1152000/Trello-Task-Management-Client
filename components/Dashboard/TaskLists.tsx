@@ -1,22 +1,23 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import AddNewButton from "./AddNewButton";
 import ListHeading from "./ListHeading";
 import { ListSkeleton } from "../Skeleton";
 import Task from "./Task";
-import { getTasksFromDB, RecordType, StatusType } from "@/lib/apicall";
 import { getTaskList } from "@/actions/tasks/getTasks";
+import { RecordType, StatusType } from "@/lib/schema";
+import { updateTask } from "@/actions/tasks/updateTask";
 
 const TaskLists = () => {
     const [listRecords, setListRecords] = useState<RecordType[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isPending, startTransition] = useTransition();
 
     useEffect(() => {
         const loadRecords = async () => {
             try {
                 const data = await getTaskList();
-                console.log(data);
-                // setListRecords(data);
+                setListRecords(data);
             } catch (error) {
                 console.error("Error fetching records:", error);
             } finally {
@@ -49,13 +50,29 @@ const TaskLists = () => {
         if (sourceStatus !== targetStatus) {
             setListRecords((prevList) =>
                 prevList.map((l) =>
-                    l.id === sourceId
+                    l._id === sourceId
                         ? { ...l, status: targetStatus as StatusType }
                         : l
                 )
             );
 
             // TODO: Update to Database
+
+            startTransition(async () => {
+                const response = await updateTask(sourceId, {
+                    status: targetStatus as StatusType,
+                });
+
+                if (!response.status) {
+                    setListRecords((prevList) =>
+                        prevList.map((l) =>
+                            l._id === sourceId
+                                ? { ...l, status: sourceStatus as StatusType }
+                                : l
+                        )
+                    );
+                }
+            });
         }
     }
 

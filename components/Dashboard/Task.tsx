@@ -1,19 +1,18 @@
-import { RecordType } from "@/lib/apicall";
+import { RecordType } from "@/lib/schema";
 import timeAgo from "@/lib/timeAgo";
 import { cn } from "@/lib/utils";
 import { Clock3, Star } from "lucide-react";
-import React from "react";
 
 interface TaskProps {
     data: RecordType;
-    draggedElement: (id: string, status: string) => void;
+    draggedElement: (_id: string, status: string) => void;
 }
 const Task = ({ data, draggedElement }: TaskProps) => {
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         const target = e.target as HTMLDivElement;
         target.style.backgroundColor = "#d1d5db";
 
-        return draggedElement(data.id, data.status);
+        return draggedElement(data._id, data.status);
     };
     const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
         const target = e.target as HTMLDivElement;
@@ -49,12 +48,14 @@ const Task = ({ data, draggedElement }: TaskProps) => {
             {/* Priority */}
             <div className=" w-full">
                 <div
-                    className={cn("w-fit px-3 py-1 text-white rounded-lg", {
-                        "bg-[#0ECC5A]": data.priority === "Low",
-                        "bg-[#ece13f]": data.priority === "Medium",
-                        "bg-[#f5872d]": data.priority === "High",
-                        "bg-[#e04b4b]": data.priority === "Urgent",
-                    })}
+                    className={cn(
+                        "w-fit px-3 py-1 text-white rounded-lg capitalize",
+                        {
+                            "bg-[#0ECC5A]": data.priority === "low",
+                            "bg-[#ece13f]": data.priority === "medium",
+                            "bg-[#e04b4b]": data.priority === "urgent",
+                        }
+                    )}
                 >
                     {data.priority}
                 </div>
@@ -63,7 +64,7 @@ const Task = ({ data, draggedElement }: TaskProps) => {
             {/* deadline */}
             <div className="flex space-x-2 text-gray-600 text-lg">
                 <Clock3 />{" "}
-                <span>{data.deadline.toLocaleDateString("fr-CA")}</span>
+                <span>{new Date(data.deadline).toLocaleDateString()}</span>
             </div>
 
             {/* timeAgo */}

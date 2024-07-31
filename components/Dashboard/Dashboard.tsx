@@ -16,8 +16,6 @@ const Dashboard = () => {
             try {
                 const data = await getUserData();
                 setUser(data); // Update state with fetched data
-
-                console.log(data?.name);
             } catch (error) {
                 console.error("Failed to fetch user data", error);
             }

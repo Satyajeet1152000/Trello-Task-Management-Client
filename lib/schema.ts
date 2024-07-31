@@ -52,3 +52,17 @@ export type User = {
     email: string;
     token: string;
 };
+
+export type StatusType = "todo" | "inProgress" | "underReview" | "finished";
+export type PriorityType = "low" | "medium" | "urgent";
+
+export type RecordType = {
+    _id: string;
+    title: string;
+    status: StatusType;
+    priority: PriorityType;
+    deadline: Date;
+    description: string;
+    favorite: boolean;
+    createdAt: Date;
+};

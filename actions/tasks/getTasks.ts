@@ -1,10 +1,9 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { getToken } from "../getToken";
 
 export const getTaskList = async () => {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
+    const token = await getToken();
 
     const response = await fetch(`${process.env.API_URL}/tasks`, {
         method: "GET",
@@ -16,5 +15,5 @@ export const getTaskList = async () => {
 
     const result = await response.json();
 
-    console.log(result);
+    return result.data;
 };
