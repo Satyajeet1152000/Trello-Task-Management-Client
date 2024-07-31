@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        API_URL: "http://localhost:3000/api",
+        API_URL: "https://trello-task-management-server.onrender.com/api",
     },
     images: {
         remotePatterns: [
