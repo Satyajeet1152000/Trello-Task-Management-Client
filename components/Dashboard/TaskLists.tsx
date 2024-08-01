@@ -7,11 +7,53 @@ import Task from "./Task";
 import { getTaskList } from "@/actions/tasks/getTasks";
 import { RecordType, StatusType } from "@/lib/schema";
 import { updateTask } from "@/actions/tasks/updateTask";
+import { deleteTask } from "@/actions/tasks/deleteTask";
+import { useListUpdater } from "@/context/ListUpdateContext";
+import { useModal } from "@/context/ModelContext";
 
 const TaskLists = () => {
     const [listRecords, setListRecords] = useState<RecordType[]>([]);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
+    const { showModal } = useModal();
+
+    const { newListData } = useListUpdater();
+
+    useEffect(() => {
+        if (newListData) {
+            console.log("Task list ---> ", newListData);
+
+            if (newListData.opt === "add") {
+                // console.log("add optimistic");
+                setListRecords((prevRecords) => [
+                    ...prevRecords,
+                    newListData.data as RecordType,
+                ]);
+            }
+
+            if (newListData.opt === "update") {
+                // console.log("Update list opti");
+                // newListData.data._id = newListData.tempId;
+
+                setListRecords((prevRecords) =>
+                    prevRecords.map((record) =>
+                        record._id === newListData.tempId
+                            ? { ...(newListData.data as RecordType) }
+                            : record
+                    )
+                );
+            }
+
+            if (newListData.opt === "delete") {
+                // console.log("Remove list opti");
+                setListRecords((prevList) =>
+                    prevList.filter(
+                        (record) => record._id !== newListData.tempId
+                    )
+                );
+            }
+        }
+    }, [newListData]);
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -29,6 +71,31 @@ const TaskLists = () => {
     }, []);
 
     const [dropData, setDropData] = useState<string[]>([]);
+
+    function handleOnEdit(data: RecordType) {
+        showModal({
+            taskOperation: "update",
+            ...data,
+            createdAt: new Date(data.updatedAt),
+            updatedAt: new Date(data.createdAt),
+            deadline: new Date(data.deadline),
+        });
+    }
+
+    function handleOnDelete(data: RecordType) {
+        //deleting optimistically
+        setListRecords((prevList) =>
+            prevList.filter((record) => record._id !== data._id)
+        );
+
+        startTransition(async () => {
+            const response = await deleteTask(data._id);
+
+            if (!response.success) {
+                setListRecords((prevList) => [...prevList, data]);
+            }
+        });
+    }
 
     function handleDraggedElement(id: string, status: string) {
         setDropData([id, status]);
@@ -63,7 +130,7 @@ const TaskLists = () => {
                     status: targetStatus as StatusType,
                 });
 
-                if (!response.status) {
+                if (!response.success) {
                     setListRecords((prevList) =>
                         prevList.map((l) =>
                             l._id === sourceId
@@ -115,6 +182,8 @@ const TaskLists = () => {
                                 key={i}
                                 data={d}
                                 draggedElement={handleDraggedElement}
+                                onEdit={handleOnEdit}
+                                onDelete={handleOnDelete}
                             />
                         ))
                 )}
@@ -139,6 +208,8 @@ const TaskLists = () => {
                                 key={i}
                                 data={d}
                                 draggedElement={handleDraggedElement}
+                                onEdit={handleOnEdit}
+                                onDelete={handleOnDelete}
                             />
                         ))
                 )}
@@ -162,6 +233,8 @@ const TaskLists = () => {
                                 key={i}
                                 data={d}
                                 draggedElement={handleDraggedElement}
+                                onEdit={handleOnEdit}
+                                onDelete={handleOnDelete}
                             />
                         ))
                 )}
@@ -185,6 +258,8 @@ const TaskLists = () => {
                                 key={i}
                                 data={d}
                                 draggedElement={handleDraggedElement}
+                                onEdit={handleOnEdit}
+                                onDelete={handleOnDelete}
                             />
                         ))
                 )}

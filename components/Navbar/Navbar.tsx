@@ -6,9 +6,12 @@ import { Button } from "../ui/button";
 import Menus from "./Menus";
 import { useEffect, useState } from "react";
 import { getUserData } from "@/actions/getUserData";
+import { useModal } from "@/context/ModelContext";
 
 const Navbar = () => {
     const [name, setName] = useState("");
+
+    const { showModal } = useModal();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +37,10 @@ const Navbar = () => {
                 <Toolbar />
             </div>
             <Menus />
-            <Button className=" space-x-2 w-full text-lg py-6 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]">
+            <Button
+                className=" space-x-2 w-full text-lg py-6 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+                onClick={() => showModal({ taskOperation: "create" })}
+            >
                 <span>Create new task</span>{" "}
                 <CirclePlusIcon className=" fill-white text-[#2F2188]" />
             </Button>

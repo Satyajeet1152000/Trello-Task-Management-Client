@@ -3,10 +3,10 @@ import Header from "./Header";
 import InfoBar from "./InfoBar";
 import TasksListSection from "./TasksListSection";
 import CreateTaskModal from "../Create-New/CreateTaskModal";
-import { ModalProvider } from "@/context/ModelContext";
 import { useEffect, useState } from "react";
 import { getUserData } from "@/actions/getUserData";
 import { User } from "@/lib/schema";
+import { ListUpdateProvider } from "@/context/ListUpdateContext";
 
 const Dashboard = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -25,14 +25,14 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <ModalProvider>
+        <ListUpdateProvider>
             <div className=" w-full h-full">
                 <Header name={user?.name || ""} />
                 <InfoBar />
                 <TasksListSection />
                 <CreateTaskModal />
             </div>
-        </ModalProvider>
+        </ListUpdateProvider>
     );
 };
 

@@ -1,3 +1,5 @@
+"use server";
+
 import { PriorityType, StatusType } from "@/lib/schema";
 import { getToken } from "../getToken";
 
@@ -23,5 +25,5 @@ export const updateTask = async (taskId: string, values: UpdateTaskProps) => {
 
     const result = await response.json();
 
-    return result.data;
+    return result;
 };

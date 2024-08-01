@@ -1,14 +1,30 @@
 "use client";
 
+import { PriorityType, StatusType } from "@/lib/schema";
 // ModalContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the shape of the context state
+
+export interface ModelDataType {
+    taskOperation: "create" | "update";
+    _id: string;
+    title: string;
+    status: StatusType;
+    priority: PriorityType;
+    deadline: Date;
+    description: string;
+    favorite: boolean;
+    user: string;
+    createdAt: Date;
+    updatedAt: Date;
+    __v?: string;
+}
 interface ModalContextType {
     isModalOpen: boolean;
-    showModal: (value?: string) => void;
+    showModal: (data?: ModelDataType) => void;
     hideModal: () => void;
-    modalValue: string | null;
+    modalData: ModelDataType | null;
 }
 
 // Create Context
@@ -22,21 +38,21 @@ interface ModalProviderProps {
 // Create Provider Component
 export const ModalProvider = ({ children }: ModalProviderProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalValue, setModalValue] = useState<string | null>(null);
+    const [modalData, setModalData] = useState<ModelDataType | null>(null);
 
-    const showModal = (value?: string) => {
-        setModalValue(value ?? null);
+    const showModal = (data?: ModelDataType) => {
+        setModalData(data || null);
         setIsModalOpen(true);
     };
 
     const hideModal = () => {
-        setModalValue(null);
+        setModalData(null);
         setIsModalOpen(false);
     };
 
     return (
         <ModalContext.Provider
-            value={{ isModalOpen, modalValue, showModal, hideModal }}
+            value={{ isModalOpen, modalData, showModal, hideModal }}
         >
             {children}
         </ModalContext.Provider>

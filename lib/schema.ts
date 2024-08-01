@@ -38,7 +38,7 @@ export const CreateNewTaskSchema = z.object({
     status: z.enum(["todo", "inProgress", "underReview", "finished"], {
         message: "Required",
     }),
-    prioriry: z.enum(["low", "medium", "high", "urgent"], {
+    priority: z.enum(["low", "medium", "urgent"], {
         message: "Required",
     }),
     deadline: z.date(),
@@ -64,5 +64,8 @@ export type RecordType = {
     deadline: Date;
     description: string;
     favorite: boolean;
+    user: string;
     createdAt: Date;
+    updatedAt: Date;
+    __v?: string;
 };

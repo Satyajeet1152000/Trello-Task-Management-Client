@@ -1,13 +1,16 @@
 import { RecordType } from "@/lib/schema";
 import timeAgo from "@/lib/timeAgo";
 import { cn } from "@/lib/utils";
-import { Clock3, Star } from "lucide-react";
+import { Clock3, SquarePen, Star, Trash2 } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface TaskProps {
     data: RecordType;
     draggedElement: (_id: string, status: string) => void;
+    onEdit: (data: RecordType) => void;
+    onDelete: (data: RecordType) => void;
 }
-const Task = ({ data, draggedElement }: TaskProps) => {
+const Task = ({ data, draggedElement, onEdit, onDelete }: TaskProps) => {
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         const target = e.target as HTMLDivElement;
         target.style.backgroundColor = "#d1d5db";
@@ -69,7 +72,26 @@ const Task = ({ data, draggedElement }: TaskProps) => {
 
             {/* timeAgo */}
 
-            <div className="text-gray-500">{timeAgo(data.createdAt)} ago</div>
+            <div className="text-gray-500 flex items-center justify-between">
+                <span>{timeAgo(data.createdAt)} ago</span>
+
+                <span>
+                    <Button
+                        variant={"ghost"}
+                        className="!p-0 !px-2 text-green-700"
+                        onClick={() => onEdit(data)}
+                    >
+                        <SquarePen />
+                    </Button>
+                    <Button
+                        variant={"ghost"}
+                        className="!p-0 !px-2 text-red-700"
+                        onClick={() => onDelete(data)}
+                    >
+                        <Trash2 />
+                    </Button>
+                </span>
+            </div>
         </div>
     );
 };
