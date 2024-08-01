@@ -11,7 +11,16 @@ const AddNewButton = ({ value }: { value: StatusType }) => {
             onClick={() =>
                 showModal({
                     taskOperation: "create",
+                    _id: "",
+                    title: "",
                     status: value,
+                    priority: "low",
+                    deadline: new Date(),
+                    description: "",
+                    favorite: false,
+                    user: "",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 })
             }
         >
