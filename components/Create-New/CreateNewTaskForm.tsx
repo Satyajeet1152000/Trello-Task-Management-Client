@@ -71,7 +71,7 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
             tempId,
             data: {
                 ...values,
-                _id: "",
+                _id: tempId,
                 user: "",
                 createdAt: new Date(),
                 updatedAt: new Date(),
@@ -82,6 +82,7 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
 
         startTransition(async () => {
             const response = await createTask(values);
+            console.log("----createe ", response);
 
             if (response.success) {
                 addNewList({

@@ -12,7 +12,6 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
         },
         body: JSON.stringify(values),
     });
-
     const result = await response.json();
 
     cookies().set("token", result.token, {

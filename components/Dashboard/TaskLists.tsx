@@ -16,15 +16,13 @@ const TaskLists = () => {
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
     const { showModal } = useModal();
-
     const { newListData } = useListUpdater();
+    const [dropData, setDropData] = useState<string[]>([]);
 
     useEffect(() => {
         if (newListData) {
-            console.log("Task list ---> ", newListData);
-
             if (newListData.opt === "add") {
-                // console.log("add optimistic");
+                // console.log("add optimistic===", newListData);
                 setListRecords((prevRecords) => [
                     ...prevRecords,
                     newListData.data as RecordType,
@@ -32,7 +30,7 @@ const TaskLists = () => {
             }
 
             if (newListData.opt === "update") {
-                // console.log("Update list opti");
+                // console.log("Update list opti===", newListData);
                 // newListData.data._id = newListData.tempId;
 
                 setListRecords((prevRecords) =>
@@ -45,7 +43,7 @@ const TaskLists = () => {
             }
 
             if (newListData.opt === "delete") {
-                // console.log("Remove list opti");
+                // console.log("Remove list opti==", newListData);
                 setListRecords((prevList) =>
                     prevList.filter(
                         (record) => record._id !== newListData.tempId
@@ -57,20 +55,17 @@ const TaskLists = () => {
 
     useEffect(() => {
         const loadRecords = async () => {
-            try {
-                const data = await getTaskList();
-                setListRecords(data);
-            } catch (error) {
-                console.error("Error fetching records:", error);
-            } finally {
-                setLoading(false);
+            const response = await getTaskList();
+
+            if (!response.success) {
+                return <div>Sorry Data Not Found</div>;
             }
+            setListRecords(response.data);
+            setLoading(false);
         };
 
         loadRecords();
     }, []);
-
-    const [dropData, setDropData] = useState<string[]>([]);
 
     function handleOnEdit(data: RecordType) {
         showModal({
@@ -115,13 +110,12 @@ const TaskLists = () => {
         const targetStatus = e.currentTarget.id;
 
         if (sourceStatus !== targetStatus) {
-            setListRecords((prevList) =>
-                prevList.map((l) =>
-                    l._id === sourceId
-                        ? { ...l, status: targetStatus as StatusType }
-                        : l
-                )
+            const updatedList = listRecords.map((l) =>
+                l._id === sourceId
+                    ? { ...l, status: targetStatus as StatusType }
+                    : l
             );
+            setListRecords(updatedList);
 
             // TODO: Update to Database
 
@@ -131,13 +125,7 @@ const TaskLists = () => {
                 });
 
                 if (!response.success) {
-                    setListRecords((prevList) =>
-                        prevList.map((l) =>
-                            l._id === sourceId
-                                ? { ...l, status: sourceStatus as StatusType }
-                                : l
-                        )
-                    );
+                    setListRecords(listRecords);
                 }
             });
         }
@@ -164,107 +152,39 @@ const TaskLists = () => {
 
     return (
         <div className="flex gap-5 pb-10">
-            <div
-                id="todo"
-                className=" flex-1 space-y-2 rounded-lg border-[2px] border-white ease-in-out transition-all duration-300"
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-            >
-                <ListHeading heading="To do" />
-                {loading ? (
-                    <ListSkeleton />
-                ) : (
-                    listRecords
-                        .filter((record) => record.status === "todo")
-                        .map((d, i) => (
-                            <Task
-                                key={i}
-                                data={d}
-                                draggedElement={handleDraggedElement}
-                                onEdit={handleOnEdit}
-                                onDelete={handleOnDelete}
-                            />
-                        ))
-                )}
-                <AddNewButton value="todo" />
-            </div>
-
-            <div
-                id="inProgress"
-                className="flex-1 space-y-2 rounded-lg border-[2px] border-white ease-in-out transition-all duration-300"
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-            >
-                <ListHeading heading="In Progress" />
-                {loading ? (
-                    <ListSkeleton />
-                ) : (
-                    listRecords
-                        .filter((record) => record.status === "inProgress")
-                        .map((d, i) => (
-                            <Task
-                                key={i}
-                                data={d}
-                                draggedElement={handleDraggedElement}
-                                onEdit={handleOnEdit}
-                                onDelete={handleOnDelete}
-                            />
-                        ))
-                )}
-                <AddNewButton value="inProgress" />
-            </div>
-            <div
-                id="underReview"
-                className="flex-1 space-y-2 rounded-lg border-[2px] border-white ease-in-out transition-all duration-300"
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-            >
-                <ListHeading heading="Under Review" />
-                {loading ? (
-                    <ListSkeleton />
-                ) : (
-                    listRecords
-                        .filter((record) => record.status === "underReview")
-                        .map((d, i) => (
-                            <Task
-                                key={i}
-                                data={d}
-                                draggedElement={handleDraggedElement}
-                                onEdit={handleOnEdit}
-                                onDelete={handleOnDelete}
-                            />
-                        ))
-                )}
-                <AddNewButton value="underReview" />
-            </div>
-            <div
-                id="finished"
-                className="flex-1 space-y-2 rounded-lg border-[2px] border-white ease-in-out transition-all duration-300"
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-            >
-                <ListHeading heading="Finished" />
-                {loading ? (
-                    <ListSkeleton />
-                ) : (
-                    listRecords
-                        .filter((record) => record.status === "finished")
-                        .map((d, i) => (
-                            <Task
-                                key={i}
-                                data={d}
-                                draggedElement={handleDraggedElement}
-                                onEdit={handleOnEdit}
-                                onDelete={handleOnDelete}
-                            />
-                        ))
-                )}
-                <AddNewButton value="finished" />
-            </div>
+            {[
+                { status: "todo", heading: "To Do" },
+                { status: "inProgress", heading: "In Progress" },
+                { status: "underReview", heading: "Under Review" },
+                { status: "finished", heading: "Finished" },
+            ].map((s, i) => (
+                <div
+                    key={s.status}
+                    id={s.status}
+                    className="flex-1 space-y-2 rounded-lg border-[2px] border-white ease-in-out transition-all duration-300"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                >
+                    <ListHeading heading={s.heading} />
+                    {loading ? (
+                        <ListSkeleton />
+                    ) : (
+                        listRecords
+                            .filter((record) => record.status === s.status)
+                            .map((d) => (
+                                <Task
+                                    key={d._id}
+                                    data={d}
+                                    draggedElement={handleDraggedElement}
+                                    onEdit={handleOnEdit}
+                                    onDelete={handleOnDelete}
+                                />
+                            ))
+                    )}
+                    <AddNewButton value={s.status as StatusType} />
+                </div>
+            ))}
         </div>
     );
 };

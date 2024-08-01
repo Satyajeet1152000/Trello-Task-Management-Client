@@ -15,5 +15,5 @@ export const getTaskList = async () => {
 
     const result = await response.json();
 
-    return result.data;
+    return result;
 };

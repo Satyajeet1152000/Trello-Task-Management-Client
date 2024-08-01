@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
 
         return response;
     } catch (error) {
-        console.error("Token invalid or expired:", error);
+        // console.error("Token invalid or expired:", error);
 
         if (
             request.nextUrl.pathname !== loginUrl.pathname &&
