@@ -44,7 +44,7 @@ import { updateTask } from "@/actions/tasks/updateTask";
 
 interface Props {
     hideModal: () => void;
-    modalData: ModelDataType;
+    modalData: ModelDataType | null;
 }
 
 const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
@@ -106,6 +106,9 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
     };
 
     const UpdateTask = (values: z.infer<typeof CreateNewTaskSchema>) => {
+        //modal null error handling
+        if (!modalData) return null;
+
         // optimitically update list
         addNewList({
             opt: "update",
