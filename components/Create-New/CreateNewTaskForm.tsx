@@ -155,6 +155,7 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
 
     const [favBtn, setFavBtn] = useState(modalData?.favorite ?? false);
 
+    const [popoverOpen, setPopoverOpen] = useState(false);
     return (
         <Form {...form}>
             <form
@@ -354,7 +355,12 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
                                         <span>Deadline</span>
                                     </FormLabel>
                                     <div className="flex-grow">
-                                        <Popover>
+                                        <Popover
+                                            open={popoverOpen}
+                                            onOpenChange={(open) =>
+                                                setPopoverOpen(open)
+                                            }
+                                        >
                                             <PopoverTrigger asChild>
                                                 <FormControl>
                                                     <Button
@@ -386,12 +392,18 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
                                                 <Calendar
                                                     mode="single"
                                                     // selected={field.value}
-                                                    onSelect={field.onChange}
+                                                    onSelect={(date) => {
+                                                        field.onChange(date);
+                                                        setPopoverOpen(false); // Close the popover
+                                                    }}
                                                     disabled={(date) =>
-                                                        date > new Date() ||
-                                                        date <
+                                                        date < new Date() ||
+                                                        date >
                                                             new Date(
-                                                                "1900-01-01"
+                                                                new Date().setFullYear(
+                                                                    new Date().getFullYear() +
+                                                                        5
+                                                                )
                                                             )
                                                     }
                                                     initialFocus
