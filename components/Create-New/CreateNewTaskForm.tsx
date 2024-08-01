@@ -37,44 +37,120 @@ import {
     X,
 } from "lucide-react";
 import { format } from "date-fns";
+import { ModelDataType } from "@/context/ModelContext";
+import { useListUpdater } from "@/context/ListUpdateContext";
+import { createTask } from "@/actions/tasks/createTask";
+import { updateTask } from "@/actions/tasks/updateTask";
 
 interface Props {
     hideModal: () => void;
-    listStatus: string | null;
+    modalData: ModelDataType;
 }
 
-const CreateNewTaskForm = ({ hideModal, listStatus }: Props) => {
+const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
     const form = useForm<z.infer<typeof CreateNewTaskSchema>>({
         resolver: zodResolver(CreateNewTaskSchema),
         defaultValues: {
             favorite: false,
-            title: "",
-            status: undefined,
-            prioriry: undefined,
-            deadline: undefined,
-            description: "",
+            title: modalData?.title ?? "",
+            status: modalData?.status ?? undefined,
+            priority: modalData?.priority ?? undefined,
+            deadline: modalData?.deadline ?? undefined,
+            description: modalData?.description ?? "",
         },
     });
 
     const [isPending, startTransition] = useTransition();
 
-    const onSubmit = (values: z.infer<typeof CreateNewTaskSchema>) => {
-        console.log("Submit Enter");
-        console.log(values);
-        // startTransition(() => {
-        // TODO: DB Logic
-        // login(values).then((data) => {
-        //     if (data?.error) {
-        //         setError(data.error);
-        //     } else {
-        //         setSuccess(data?.success);
-        //         // You can redirect or perform any other actions on success here
-        //     }
-        // });
-        // });
+    const { addNewList } = useListUpdater();
+
+    const CreateNewList = (values: z.infer<typeof CreateNewTaskSchema>) => {
+        const tempId = crypto.randomUUID();
+        addNewList({
+            opt: "add",
+            tempId,
+            data: {
+                ...values,
+                _id: "",
+                user: "",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+        });
+
+        hideModal();
+
+        startTransition(async () => {
+            const response = await createTask(values);
+
+            if (response.success) {
+                addNewList({
+                    opt: "update",
+                    tempId,
+                    data: response.data,
+                });
+            } else {
+                addNewList({
+                    opt: "delete",
+                    tempId,
+                    data: {
+                        ...values,
+                        _id: "",
+                        user: "",
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    },
+                });
+            }
+        });
     };
 
-    const [favBtn, setFavBtn] = useState(false);
+    const UpdateTask = (values: z.infer<typeof CreateNewTaskSchema>) => {
+        // optimitically update list
+        addNewList({
+            opt: "update",
+            tempId: modalData?._id,
+            data: {
+                ...values,
+                _id: modalData._id,
+                user: modalData.user,
+                createdAt: modalData.createdAt,
+                updatedAt: modalData.updatedAt,
+            },
+        });
+
+        hideModal();
+
+        startTransition(async () => {
+            const response = await updateTask(modalData._id, values);
+
+            if (response.success) {
+                addNewList({
+                    opt: "update",
+                    tempId: modalData?._id,
+                    data: response.data,
+                });
+            } else {
+                const { taskOperation, ...rest } = modalData;
+                addNewList({
+                    opt: "update",
+                    tempId: modalData?._id,
+                    data: rest,
+                });
+            }
+        });
+    };
+    const onSubmit = (values: z.infer<typeof CreateNewTaskSchema>) => {
+        if (modalData?.taskOperation === "create") {
+            CreateNewList(values);
+        }
+
+        if (modalData?.taskOperation === "update") {
+            UpdateTask(values);
+        }
+    };
+
+    const [favBtn, setFavBtn] = useState(modalData?.favorite ?? false);
 
     return (
         <Form {...form}>
@@ -175,9 +251,7 @@ const CreateNewTaskForm = ({ hideModal, listStatus }: Props) => {
                                     <div className="flex-grow">
                                         <Select
                                             onValueChange={field.onChange}
-                                            defaultValue={
-                                                listStatus ?? field.value
-                                            }
+                                            defaultValue={field.value}
                                         >
                                             <FormControl>
                                                 <SelectTrigger className=" text-gray-700  text-md">
@@ -223,7 +297,7 @@ const CreateNewTaskForm = ({ hideModal, listStatus }: Props) => {
                     {/* Priority */}
                     <FormField
                         control={form.control}
-                        name="prioriry"
+                        name="priority"
                         render={({ field }) => (
                             <FormItem>
                                 <div className="flex">
@@ -245,14 +319,13 @@ const CreateNewTaskForm = ({ hideModal, listStatus }: Props) => {
                                                 {[
                                                     "low",
                                                     "medium",
-                                                    "high",
                                                     "urgent",
                                                 ].map((d, i) => (
                                                     <SelectItem
                                                         value={d}
                                                         key={i}
                                                     >
-                                                        <span className=" capitalize text-md text-gray-700">
+                                                        <span className=" capitalize text-md text-lg text-gray-700">
                                                             {d}
                                                         </span>
                                                     </SelectItem>
@@ -366,10 +439,10 @@ const CreateNewTaskForm = ({ hideModal, listStatus }: Props) => {
 
                     <Button
                         type="submit"
-                        className=" space-x-2 w-fit text-lg py-6 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+                        className=" space-x-2 w-fit text-lg py-6 capitalize bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
                         disabled={isPending}
                     >
-                        Create Task
+                        {modalData?.taskOperation} Task
                     </Button>
 
                     {/* breakpoint */}
