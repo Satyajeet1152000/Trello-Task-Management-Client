@@ -77,7 +77,7 @@ const TaskToolbar = () => {
                     </span>
                 ))}
                 <Button
-                    className=" space-x-2 text-lg py-5 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+                    className=" space-x-2 text-lg py-5 dark:text-white bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
                     onClick={() =>
                         showModal({
                             taskOperation: "create",

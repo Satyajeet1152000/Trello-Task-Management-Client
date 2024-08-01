@@ -101,8 +101,8 @@ const TaskLists = () => {
 
         // change border after drop finish on lists todo/inprogress/etc
         const style = e.currentTarget.style;
-        style.borderColor = "#fff";
-        style.boxShadow = "0 0 0 0 #fff";
+        style.borderColor = "";
+        style.boxShadow = "";
 
         // Update lists and send it to data for update
         const sourceId = dropData[0];
@@ -145,8 +145,8 @@ const TaskLists = () => {
     function handleDragLeave(e: React.DragEvent<HTMLDivElement>) {
         // console.log(e.currentTarget.id);
         const style = e.currentTarget.style;
-        style.borderColor = "#fff";
-        style.boxShadow = "0 0 0 0 #fff";
+        style.borderColor = "";
+        style.boxShadow = "";
         e.preventDefault();
     }
 
@@ -161,7 +161,7 @@ const TaskLists = () => {
                 <div
                     key={s.status}
                     id={s.status}
-                    className="flex-1 space-y-2 rounded-lg border-[2px] border-white ease-in-out transition-all duration-300"
+                    className="flex-1 space-y-2 rounded-lg  ease-in-out transition-all duration-300 "
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}

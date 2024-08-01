@@ -25,7 +25,7 @@ const Task = ({ data, draggedElement, onEdit, onDelete }: TaskProps) => {
     return (
         <div
             className={cn(
-                "border-2 border-gray-200 rounded-lg flex flex-col p-3 gap-3",
+                "border-2 border-gray-200 dark:border-gray-600 rounded-lg flex flex-col p-3 gap-3",
                 {}
             )}
             draggable
@@ -34,7 +34,7 @@ const Task = ({ data, draggedElement, onEdit, onDelete }: TaskProps) => {
         >
             {/* title and favrite icon */}
             <div className="flex items-center justify-between">
-                <h1 className="text-xl text-gray-600 font-semibold text-wrap">
+                <h1 className="text-xl text-gray-600 dark:text-gray-200 font-semibold text-wrap">
                     {data.title}
                 </h1>
                 <Star
@@ -44,7 +44,7 @@ const Task = ({ data, draggedElement, onEdit, onDelete }: TaskProps) => {
                 />
             </div>
 
-            <p className=" text-lg text-gray-600 w-full text-wrap">
+            <p className=" text-lg text-gray-600 dark:text-gray-400 w-full text-wrap">
                 {data.description}
             </p>
 
@@ -65,7 +65,7 @@ const Task = ({ data, draggedElement, onEdit, onDelete }: TaskProps) => {
             </div>
 
             {/* deadline */}
-            <div className="flex space-x-2 text-gray-600 text-lg">
+            <div className="flex space-x-2 text-gray-600 dark:text-gray-200 text-lg">
                 <Clock3 />{" "}
                 <span>{new Date(data.deadline).toLocaleDateString()}</span>
             </div>

@@ -7,7 +7,7 @@ const AddNewButton = ({ value }: { value: StatusType }) => {
     const { showModal } = useModal();
     return (
         <Button
-            className=" space-x-2 text-lg py-6 bg-gradient-to-b from-[#3A3A3A] to-[#202020] w-full flex items-center justify-between"
+            className=" space-x-2 text-lg py-6 bg-gradient-to-b from-[#3A3A3A] dark:from-[#8b8b8b]  to-[#202020] w-full flex items-center justify-between"
             onClick={() =>
                 showModal({
                     taskOperation: "create",

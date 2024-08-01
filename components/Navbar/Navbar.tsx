@@ -26,7 +26,7 @@ const Navbar = () => {
         fetchData();
     }, []);
     return (
-        <div className="px-3 py-5 space-y-2">
+        <div className="px-3 py-5 space-y-2  fixed">
             <div>
                 <UserAvatar
                     user={{
@@ -38,7 +38,7 @@ const Navbar = () => {
             </div>
             <Menus />
             <Button
-                className=" space-x-2 w-full text-lg py-6 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+                className=" space-x-2 w-full text-lg dark:text-white py-6 bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
                 onClick={() =>
                     showModal({
                         taskOperation: "create",
