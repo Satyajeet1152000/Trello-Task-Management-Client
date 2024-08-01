@@ -19,7 +19,7 @@ const Task = ({ data, draggedElement, onEdit, onDelete }: TaskProps) => {
     };
     const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
         const target = e.target as HTMLDivElement;
-        target.style.backgroundColor = "white";
+        target.style.backgroundColor = "";
     };
 
     return (
