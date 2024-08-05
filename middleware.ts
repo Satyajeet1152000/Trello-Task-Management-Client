@@ -1,52 +1,19 @@
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+/**
+ * This middleware file invoke auth() function only on every matched routes.
+ * It worked for both private and public routes.
+ * So it makes entire application fully protected and it needs to be authorize to access it.
+ */
 
-export async function middleware(request: NextRequest) {
-    const token = request.cookies.get("token")?.value;
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
 
-    const loginUrl = new URL("/login", request.url);
-    const dashboardUrl = new URL("/dashboard", request.url);
+// so here extracting auth from auth.config.ts not from auth.ts bcz we use non edge supported PrimaAdapter.
+const { auth } = NextAuth(authConfig);
 
-    if (!token) {
-        if (
-            request.nextUrl.pathname !== loginUrl.pathname &&
-            request.nextUrl.pathname !== "/register"
-        ) {
-            return NextResponse.redirect(loginUrl);
-        }
-        return NextResponse.next();
-    }
+export default auth((req) => {
+    return;
+});
 
-    try {
-        const response = NextResponse.next();
-        response.cookies.set("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 60 * 60 * 24 * 7, // 1 week
-        });
-
-        if (
-            request.nextUrl.pathname === loginUrl.pathname ||
-            request.nextUrl.pathname === "/register"
-        ) {
-            return NextResponse.redirect(dashboardUrl);
-        }
-
-        return response;
-    } catch (error) {
-        // console.error("Token invalid or expired:", error);
-
-        if (
-            request.nextUrl.pathname !== loginUrl.pathname &&
-            request.nextUrl.pathname !== "/register"
-        ) {
-            return NextResponse.redirect(loginUrl);
-        }
-        return NextResponse.next();
-    }
-}
-
-// Apply middleware to the entire application
 export const config = {
-    matcher: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
