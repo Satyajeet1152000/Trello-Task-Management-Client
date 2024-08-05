@@ -1,7 +1,6 @@
 "use server";
 
 import { LoginSchema } from "@/lib/schema";
-import { cookies } from "next/headers";
 import { z } from "zod";
 
 const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -13,12 +12,6 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
         body: JSON.stringify(values),
     });
     const result = await response.json();
-
-    cookies().set("token", result.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
 
     return result;
 };

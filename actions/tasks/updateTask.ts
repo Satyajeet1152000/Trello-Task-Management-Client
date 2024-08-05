@@ -1,8 +1,6 @@
 "use server";
 
 import { PriorityType, StatusType } from "@/lib/schema";
-import { getToken } from "../getToken";
-
 interface UpdateTaskProps {
     title?: string;
     description?: string;
@@ -12,7 +10,8 @@ interface UpdateTaskProps {
     deadline?: Date;
 }
 export const updateTask = async (taskId: string, values: UpdateTaskProps) => {
-    const token = await getToken();
+    // TODO: get token
+    const token = "token";
 
     const response = await fetch(`${process.env.API_URL}/tasks/${taskId}`, {
         method: "PUT",

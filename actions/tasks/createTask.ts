@@ -1,13 +1,13 @@
 "use server";
 
 import { z } from "zod";
-import { getToken } from "../getToken";
 import { CreateNewTaskSchema } from "@/lib/schema";
 
 export const createTask = async (
     values: z.infer<typeof CreateNewTaskSchema>
 ) => {
-    const token = await getToken();
+    // TODO: get Token
+    const token = "token";
 
     const response = await fetch(`${process.env.API_URL}/tasks`, {
         method: "POST",

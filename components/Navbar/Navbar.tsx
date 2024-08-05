@@ -4,34 +4,21 @@ import UserAvatar from "./UserAvatar";
 import Toolbar from "./Toolbar";
 import { Button } from "../ui/button";
 import Menus from "./Menus";
-import { useEffect, useState } from "react";
-import { getUserData } from "@/actions/getUserData";
 import { useModal } from "@/context/ModelContext";
 
 const Navbar = () => {
-    const [name, setName] = useState("");
-
     const { showModal } = useModal();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getUserData();
-                setName(data!.name); // Update state with fetched data
-            } catch (error) {
-                console.error("Failed to fetch user data", error);
-            }
-        };
+    // TODO: get Usernmae
+    const user = { name: "Satyajeet Singh" };
 
-        fetchData();
-    }, []);
     return (
         <div className="px-3 py-5 space-y-2  fixed">
             <div>
                 <UserAvatar
                     user={{
                         image: "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
-                        name,
+                        name: user.name,
                     }}
                 />
                 <Toolbar />

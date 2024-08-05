@@ -1,9 +1,8 @@
 "use server";
 
-import { getToken } from "../getToken";
-
 export const getTaskList = async () => {
-    const token = await getToken();
+    // TODO: get token
+    const token = "token";
 
     const response = await fetch(`${process.env.API_URL}/tasks`, {
         method: "GET",
