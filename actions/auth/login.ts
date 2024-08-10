@@ -14,8 +14,6 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
     } catch (error) {
         // console.log("------------ Login function Error -------------");
         if (error instanceof AuthError) {
-            console.log(error.cause?.err?.message);
-
             switch (error.type) {
                 case "CredentialsSignin":
                     return { success: false, error: "Invalid Credentials." };

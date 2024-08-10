@@ -82,7 +82,6 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
 
         startTransition(async () => {
             const response = await createTask(values);
-            console.log("----createe ", response);
 
             if (response.success) {
                 addNewList({

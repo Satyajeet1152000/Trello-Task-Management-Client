@@ -7,7 +7,6 @@ export default auth((req) => {
     const isLoggedIn = !!req.auth;
     const isPublicRoutes = publicRoutes.includes(nextUrl.pathname);
 
-    console.log(isPublicRoutes, isLoggedIn);
     const loginUrl = new URL("/login", nextUrl.origin);
 
     if (!isPublicRoutes && !isLoggedIn) {
