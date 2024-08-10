@@ -9,10 +9,10 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
     try {
         await signIn("credentials", {
             ...values,
-            redirectTo: "/",
+            redirectTo: "/dashboard",
         });
     } catch (error) {
-        console.log("------------ Login function Error -------------");
+        // console.log("------------ Login function Error -------------");
         if (error instanceof AuthError) {
             console.log(error.cause?.err?.message);
 

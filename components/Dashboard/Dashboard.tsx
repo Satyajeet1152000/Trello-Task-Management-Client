@@ -5,14 +5,15 @@ import TasksListSection from "./TasksListSection";
 import CreateTaskModal from "../Create-New/CreateTaskModal";
 import { ListUpdateProvider } from "@/context/ListUpdateContext";
 
-const Dashboard = () => {
-    // TODO: get user name
-    const user = { name: "Satyajeet Singh" };
-
+const Dashboard = ({
+    user,
+}: {
+    user: { id: string; name: string; email: string; token: string };
+}) => {
     return (
         <ListUpdateProvider>
             <div className=" w-full h-full">
-                <Header name={user?.name || ""} />
+                <Header name={user?.name} />
                 <InfoBar />
                 <TasksListSection />
                 <CreateTaskModal />

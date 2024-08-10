@@ -1,8 +1,21 @@
-// "use server";
+"use server";
 
-// import Dashboard from "@/components/Dashboard/Dashboard";
-// const DashboardPage = async () => {
-//     return <Dashboard />;
-// };
+import { auth } from "@/auth/auth";
+import Dashboard from "@/components/Dashboard/Dashboard";
 
-// export default DashboardPage;
+const DashboardPage = async () => {
+    const data = await auth();
+
+    return (
+        <Dashboard
+            user={{
+                id: data?.user.id ?? "",
+                name: data?.user.name ?? "",
+                email: data?.user.email ?? "",
+                token: data?.user.token ?? "",
+            }}
+        />
+    );
+};
+
+export default DashboardPage;
