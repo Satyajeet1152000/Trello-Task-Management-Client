@@ -13,13 +13,12 @@ const Toolbar = () => {
 
     return (
         <div className="text-gray-500 flex items-center justify-between py-2">
-            <div className="flex gap-5">
-                <Button variant={"ghost"} className="!p-0">
+            <div className="flex">
+                <Button variant={"ghost"}>
                     <BellDot />
                 </Button>
                 <Button
                     variant={"ghost"}
-                    className="!p-0"
                     onClick={() => {
                         theme === "dark" ? setTheme("light") : setTheme("dark");
                     }}
@@ -30,7 +29,7 @@ const Toolbar = () => {
                         <Sun size={20} className="ml-auto" />
                     )}
                 </Button>
-                <Button variant={"ghost"} className="!p-0">
+                <Button variant={"ghost"}>
                     <ChevronsRight />
                 </Button>
             </div>

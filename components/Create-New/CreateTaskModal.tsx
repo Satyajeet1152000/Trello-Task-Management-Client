@@ -5,9 +5,10 @@ const CreateTaskModal = () => {
     const { isModalOpen, hideModal, modalData } = useModal();
 
     if (!isModalOpen) return null;
+
     return (
         <div
-            className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-end"
+            className="fixed inset-0 backdrop-blur-sm bg-opacity-75 flex items-center justify-end overflow-y-hidden"
             onClick={hideModal}
         >
             <div

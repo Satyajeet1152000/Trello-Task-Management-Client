@@ -1,7 +1,13 @@
 "use client";
 
 import { PriorityType, StatusType } from "@/lib/schema";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+    createContext,
+    useContext,
+    useState,
+    ReactNode,
+    useEffect,
+} from "react";
 
 export interface ModelDataType {
     taskOperation: "create" | "update";
@@ -34,6 +40,17 @@ interface ModalProviderProps {
 export const ModalProvider = ({ children }: ModalProviderProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalData, setModalData] = useState<ModelDataType | null>(null);
+
+    // hide scrollbar
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = "hidden";
+            document.body.style.overflowX = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+            document.body.style.overflowX = "hidden";
+        }
+    }, [isModalOpen]);
 
     const showModal = (data?: ModelDataType) => {
         setModalData(data || null);

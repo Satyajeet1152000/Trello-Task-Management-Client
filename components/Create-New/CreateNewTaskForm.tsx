@@ -161,7 +161,7 @@ const CreateNewTaskForm = ({ hideModal, modalData }: Props) => {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className=" space-y-6 p-5 bg-white h-full w-full"
+                className=" space-y-6 p-5 bg-white dark:bg-[#0f2031] h-full w-full"
             >
                 <div className="flex items-center justify-between">
                     <div>
