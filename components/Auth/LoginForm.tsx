@@ -16,7 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { LoginSchema } from "@/lib/schema";
 import FormSuccess from "../FormSuccess";
-import { useRouter } from "next/navigation";
 import login from "@/actions/auth/login";
 
 const LoginForm = () => {
@@ -25,7 +24,6 @@ const LoginForm = () => {
         success: false,
         message: "",
     });
-    const router = useRouter();
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),

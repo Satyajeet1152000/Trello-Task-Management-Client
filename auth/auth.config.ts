@@ -1,6 +1,7 @@
 import { LoginSchema } from "@/lib/schema";
 import { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { decode, JwtPayload } from "jsonwebtoken";
 
 export default {
     providers: [
@@ -27,15 +28,24 @@ export default {
                 );
                 const result = await response.json();
 
-                console.log("----------- authorize ----------");
-                console.log(result);
+                // console.log("----------- authorize ----------");
+                // console.log(result);
 
                 if (!result.success) throw new Error(result.error);
 
+                const decodedToken = decode(result.token) as JwtPayload;
+
+                if (!decodedToken) {
+                    return null;
+                }
+
                 const user = {
-                    id: result.id,
+                    id: decodedToken.id,
+                    name: decodedToken.name,
+                    email: decodedToken.email,
                     token: result.token,
                 };
+
                 return user;
             },
         }),
