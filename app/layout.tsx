@@ -18,14 +18,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={inter.className}>
-                <ThemeProvider
+                {/* <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
                     enableSystem
                     disableTransitionOnChange
-                >
-                    {children}
-                </ThemeProvider>
+                > */}
+                {children}
+                {/* </ThemeProvider> */}
             </body>
         </html>
     );

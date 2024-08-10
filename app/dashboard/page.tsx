@@ -1,8 +1,8 @@
-"use server";
+// "use server";
 
-import Dashboard from "@/components/Dashboard/Dashboard";
-const DashboardPage = async () => {
-    return <Dashboard />;
-};
+// import Dashboard from "@/components/Dashboard/Dashboard";
+// const DashboardPage = async () => {
+//     return <Dashboard />;
+// };
 
-export default DashboardPage;
+// export default DashboardPage;

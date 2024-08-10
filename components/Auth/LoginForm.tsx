@@ -37,14 +37,11 @@ const LoginForm = () => {
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         startTransition(async () => {
-            const result = await login(values);
-            if (result.success) {
-                router.push("/dashboard");
-            }
+            const response = await login(values);
 
             setFormSuccess({
-                success: result.success,
-                message: !result.success && result.error,
+                success: response.success,
+                message: response.success ? "" : (response.error as string),
             });
         });
     };
